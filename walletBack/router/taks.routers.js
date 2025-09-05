@@ -4,13 +4,16 @@ import {pool}  from "../db.js";
 const router=Router();
 
 //obtener una categoria
-router.get("/categorias", (req, res)=>{
-    res.send("obtenido Usuario")
+router.get("/categorias", async (req, res)=>{
+    const {rows}= await pool.query("select * from categoria")
+    console.log(rows)
+    res.json(rows)
 })
 //obtener una categoria por id
-router.get("/categorias/:id", (req, res)=>{
-    const {id}=req.params
-    res.send(`obtenido Usuario ${userId}`)
+router.get("/categorias/:id", async (req, res)=>{
+    const {id}=req.params;
+    const {rows} = await pool.query(`select * from categoria where id=${id}`)
+    res.json(rows[0])
 })
 
 //agrego una categoria
