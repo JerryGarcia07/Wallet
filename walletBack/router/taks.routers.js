@@ -12,7 +12,9 @@ router.get("/categorias", async (req, res)=>{
 //obtener una categoria por id
 router.get("/categorias/:id", async (req, res)=>{
     const {id}=req.params;
-    const {rows} = await pool.query(`select * from categoria where id=${id}`)
+    const {rows} = await pool.query(`select * from categoria where id=${id}`);
+    if(rows.length===0) 
+        return res.status(404).json({message: 'la categoria no encontrada'})
     res.json(rows[0])
 })
 
@@ -28,9 +30,12 @@ router.put("/categorias/:id", (req, res)=>{
 })
 
 //eliminar categoria
-router.delete("/categorias/:id", (req, res)=>{
+router.delete("/categorias/:id", async (req, res)=>{
     const {id}=req.params
-    res.send(`elimina categoria ${id}`)
+    const { rowCount}=await pool.query(`delete from categoria where id=$1 returning *`, [id]);
+    if(rowCount===0)
+         return res.status(404).json({message: 'la categoria no encontrada'})
+    return res.sendStatus(204)
 })
 
 
