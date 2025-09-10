@@ -7,6 +7,7 @@ const app= express();
 
 
 //Middlewaree para leer json
+app.use(express.json())
 app.use(useRouter)
 
 

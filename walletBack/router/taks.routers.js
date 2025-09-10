@@ -19,8 +19,11 @@ router.get("/categorias/:id", async (req, res)=>{
 })
 
 //agrego una categoria
-router.post("/categorias", (req, res)=>{
-    res.send("Creando Categoria")
+router.post("/categorias", async (req, res)=>{
+    const rest=req.body;
+    const {rows}=await pool.query(`insert into categoria (nombre, usuario_id) VALUES ($1, $2) returning *`, [rest.nombre, rest.usuario_id])
+    console.log(rows)
+    res.send(rows[0])
 })
 
 //actualizar categoria
