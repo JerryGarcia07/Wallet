@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { getCategoria, getCategorias, postCategoria, putCategoria, deleteCategoria } from "../router/categoria.routers";
 
-
 const router=Router();
 
 router.get("/categorias", getCategorias)
