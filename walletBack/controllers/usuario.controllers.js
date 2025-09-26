@@ -1,4 +1,4 @@
-import { pool } from "../db";
+import { pool } from "../db.js";
 
 //obtener una categoria
 export const getUsers= async(req, res)=>{
