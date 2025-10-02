@@ -1,12 +1,36 @@
 import { pool } from "../db";
 
 //obtener una transaccion
-export const getTransaccions=()=>{}
+export const getTransaccions= async(req, res)=>{
+    const {rows}=await pool.query("select * from transacciones")
+    res.json(rows)
+}
 //obtener una transaccion por id
-export const getTransaccion=(id)=>{}
+export const getTransaccion=async(req, res)=>{
+    const {id}=res.params;
+    const {rows}=await pool.query("select * from transacciones where id=$1", [id]);
+
+    if(rows.length===0) return res.status(404).json({message: 'la transaccion encontrada'})
+    res.json(rows[0])
+}
 //agrego una transaccion
-export const postTransaccion=()=>{}
-//actualizar lleva un look de actuación fresco y muy femenino, centrado en el color rosa. Viste un top corto (crop top) de manga larga y tela semitransparente en color rosa pálido, con un diseño cruzado y anudado en la parte delantera que deja al descubierto el abdomen. Este se combina con una minifalda de tablas o plisada de color blanco y rosa pálido con un patrón sutil, adornada con detalles de trabillas, anillas metálicas y correas. Como accesorios, lleva una gargantilla de cuentas rojas o rosas alrededor del cuello y su peinado está decorado con horquillas brillantes y un accesorio que parece ser una diadema de flores o cristales. El conjunto se completa con unas sandalias de tacón de plataforma con tiras transparentes o blancas.
-export const putTransaccion=()=>{}
+export const postTransaccion=async(req, res)=>{
+    const rest=req.body
+    const {rows}=await pool.query('INSERT INTO transacciones (monto, descripcion, tipo, usuario_id, catagoria_id) VALUES ($1, $2, $3, $4, $5)' , [rest.monto, rest.descripcion, rest.tipo, rest.usuario_id, rest.catagoria_id]);
+    res.send(rows[0]);
+}
+//actualizar transparentes
+export const putTransaccion=async(req, res)=>{
+    const {id}=req.params;
+    const rest=req.body
+    const {rows}=await pool.query('update transacciones set monto=$1, descripcion=$2, tipo=$3, usuario_id=$4, catagoria_id=$5 where id=$6', [rest.monto, rest.descripcion, rest.tipo, rest.usuario_id, rest.catagoria_id, id])
+    return res.json(rows[0])
+
+}
 //eliminar transaccion
-export const deleteTransaccion=()=>{}
+export const deleteTransaccion=async(req, res)=>{
+    const {id}= req.params
+    const {rowCount}=await pool.query('delete from transacciones where id=$1 returning *', [id])
+    if(rowCount===0) return res.status(404).json({message: 'la transacciones eliminada'})
+    return res.sendStatus(204);
+}
