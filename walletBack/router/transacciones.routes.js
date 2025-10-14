@@ -1,6 +1,10 @@
 import { Router } from "express";
-import { deleteTransaccion, getTransaccion, getTransaccions, postTransaccion, putTransaccion } from "../controllers/transacciones.controllers";
-
+import { deleteTransaccion, 
+    getTransaccion, 
+    getTransaccions, 
+    postTransaccion, 
+    putTransaccion 
+} from "./../controllers/transacciones.controllers.js";
 
 const router=Router();
 

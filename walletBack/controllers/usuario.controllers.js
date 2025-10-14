@@ -8,7 +8,7 @@ export const getUsers= async(req, res)=>{
 //obtener una categoria por id
 export const getUser=async(req, res)=>{
     const {id}=req.params;
-    const {rows}=await pool.query("select * from usuario where id=*$1", [id]);
+    const {rows}=await pool.query(`select * from usuario where id=$1`, [id]);
     if(rows.length===0) 
         return res.status(404).json({message:"usuario no encontrado"})
     res.json(rows[0])

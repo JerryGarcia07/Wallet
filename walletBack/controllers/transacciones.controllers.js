@@ -1,4 +1,4 @@
-import { pool } from "../db";
+import { pool } from "../db.js";
 
 //obtener una transaccion
 export const getTransaccions= async(req, res)=>{
@@ -7,7 +7,7 @@ export const getTransaccions= async(req, res)=>{
 }
 //obtener una transaccion por id
 export const getTransaccion=async(req, res)=>{
-    const {id}=res.params;
+    const {id}=req.params;
     const {rows}=await pool.query("select * from transacciones where id=$1", [id]);
 
     if(rows.length===0) return res.status(404).json({message: 'la transaccion encontrada'})

@@ -31,6 +31,6 @@ export const deleteCategoria=async (req, res)=>{
     const {id}=req.params
     const { rowCount}=await pool.query(`delete from categoria where id=$1 returning *`, [id]);
     if(rowCount===0)
-         return res.status(404).json({message: 'la categoria no encontrada'})
+         return res.status(404).json({message: 'la categoria no eliminada'})
     return res.sendStatus(204)
 }

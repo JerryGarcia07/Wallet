@@ -3,23 +3,21 @@ import express from 'express';
 import morgan from 'morgan';
 import {PORT} from "./config.js"
 
-
 //Routers
 import cateRouter from './router/categoria.routes.js';
 import userRouter from './router/usuario.routes.js';
-
+import useTransacciones from './router/transacciones.routes.js'
 
 const app= express();
-
 
 //Middlewaree para leer json
 app.use(express.json())
 app.use(morgan("dev"))
 
-
 //Usar router
 app.use("/api", cateRouter);
-app.use('/api', userRouter);
+app.use("/api", userRouter);
+app.use("/api", useTransacciones);
 
 
 app.listen(PORT, ()=>{
