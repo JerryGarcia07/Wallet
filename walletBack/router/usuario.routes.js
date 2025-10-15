@@ -3,7 +3,7 @@ import { getUser,
     getUsers, 
     postUser, 
     putUser, 
-    deleteUser 
+    deleteUser
 } from "./../controllers/usuario.controllers.js";
 
 const router=Router();

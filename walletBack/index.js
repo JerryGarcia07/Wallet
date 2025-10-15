@@ -19,7 +19,6 @@ app.use("/api", cateRouter);
 app.use("/api", userRouter);
 app.use("/api", useTransacciones);
 
-
 app.listen(PORT, ()=>{
     console.log(`servidor corriendo en http://localhost:${PORT}`)
 })
